@@ -1,6 +1,6 @@
 <template>
-	<div class="card model-card my-1 mx-auto">
-		<p>{{ value }} de {{ family }}</p>
+	<div class="model-card my-1 mx-auto">
+		<p>{{ card.value }} de {{ card.family }}</p>
 	</div>
 </template>
 
@@ -12,13 +12,16 @@
 				
 			}
 		},
-		props: ['value', 'family']
+		props: {
+			card : {type: Object}
+		}
 	}
 </script>
 
 <style scoped>
 .model-card{
-	height: 150;
-	width: 500px;
+	height: 200px;
+	width: 150px;
+	border: black solid 1px;
 }
 </style>
