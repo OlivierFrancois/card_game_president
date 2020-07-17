@@ -1,6 +1,6 @@
 <template>
 	<div class="header-top">
-		<p>Jeu de carte : Président</p>
+		<p>Jeu de cartes : Président</p>
 	</div>
 </template>
 
