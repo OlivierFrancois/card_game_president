@@ -1,6 +1,7 @@
 <template>
   <div id="app">
 	  <h1>Jeu de carte - Président</h1>
+	  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est, quo!</p>
   </div>
 </template>
 
