@@ -1,19 +1,22 @@
 <template>
 	<div id="app">
 		<header-top></header-top>
-		<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est, quo!</p>
-		
-		
+		<cards-deck></cards-deck>
+		<hand></hand>
 	</div>
 </template>
 
 <script>
 	import Header from './components/Header'
+	import CardsDeck from './components/CardsDeck'
+	import Hand from './components/Hand'
 
 	export default {
 		name: 'App',
 		components: {
-			'header-top': Header
+			'header-top': Header,
+			'cards-deck': CardsDeck,
+			'hand': Hand,
 		}
 	}
 </script>
