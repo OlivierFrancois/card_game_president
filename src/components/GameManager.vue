@@ -29,33 +29,25 @@
 		</div>
 
 		<br>
-		<div
-		class="hand"
-		v-for="(hand, index) in hands"
-		:key="index">
-			<div class="hand-header">Joueur {{ index + 1 }}</div>
-			<div class="hand-body">
-				<card
-				v-for="(card, index) in hand"
-				:key="index"
-				:card="card"
-				></card>
-				
-				<button class="btn btn-primary" v-if="playerTurn == index">Jouer</button>
-			</div>
-
+		
+		<hand v-for="(hand, index) in hands"
+		:key="index"
+		:cards="hands[index]"
+		:playerIndex="index"></hand>
 			
-		</div>
+		
 	</div>
 </template>
 
 <script>
 	import Card from './Card'
+	import Hand from './Hand'
 
 	export default {
 		name: 'GameManager',
 		components: {
 			'card': Card,
+			'hand': Hand
 		},
 		data() {
 			return{
