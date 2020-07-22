@@ -1,22 +1,20 @@
 <template>
 	<div id="app">
 		<header-top></header-top>
-		<cards-deck></cards-deck>
-		<hand></hand>
+		<game-manager></game-manager>
+		<br><br>
 	</div>
 </template>
 
 <script>
 	import Header from './components/Header'
-	import CardsDeck from './components/CardsDeck'
-	import Hand from './components/Hand'
+	import GameManager from './components/GameManager'
 
 	export default {
 		name: 'App',
 		components: {
 			'header-top': Header,
-			'cards-deck': CardsDeck,
-			'hand': Hand,
+			'game-manager': GameManager
 		}
 	}
 </script>
