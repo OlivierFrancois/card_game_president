@@ -5,6 +5,8 @@
 		:initCardsDeck="cardsDeck"
 		:initHands="hands"></deck>
 
+		<button class="btn btn-danger mr-3  my-1" v-on:click="reset()">Reset la partie</button>
+
 		<trick :initTrick="trick"></trick>
 
 		<br>
@@ -43,6 +45,13 @@
 		methods: {
 			updateDeck(updatedDeck){
 				this.cardsDeck = updatedDeck;
+			},
+			reset(){
+				this.cardsDeck = [];
+				this.hands = [];
+				this.trick = [];
+				this.playerSelection = [];
+				this.playerTurn = 0;
 			},
 			nextTurn(){
 				(this.playerTurn >= this.rules.playerNb) ? (this.playerTurn = 0) : (this.playerTurn++);

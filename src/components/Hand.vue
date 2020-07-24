@@ -18,8 +18,6 @@
 				
 				<button class="btn btn-primary" v-if="playTurn" @click="pushToTrick()">Jouer</button>
 			</div>
-
-			
 		</div>
 </template>
 

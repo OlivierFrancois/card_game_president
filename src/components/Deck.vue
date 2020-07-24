@@ -3,7 +3,6 @@
 		<button class="btn btn-primary mr-3 my-1" v-on:click="generateDeck()">Générer un deck</button>
 		<button class="btn btn-primary mr-3 my-1" v-on:click="shuffleDeck()">Mélanger le deck</button>
 		<button class="btn btn-primary mr-3 my-1 " v-on:click="distrib()">Distribuer</button>
-		<button class="btn btn-danger mr-3  my-1" v-on:click="reset()">Reset la partie</button>
 		
 		<div class="deck" v-if="cardsDeck.length > 0">
 			<div class="deck-header">Deck</div>
@@ -55,13 +54,6 @@
 				}
 
 				//this.$emit('updateDeck', this.cardsDeck)
-			},
-			reset(){
-				this.cardsDeck = [];
-				this.hands = [];
-				this.trick = [];
-				this.playerSelection = [];
-				this.playerTurn = 0;
 			},
 			shuffleDeck(){
 				let tempArr = this.cardsDeck.slice(); //clone the deck
