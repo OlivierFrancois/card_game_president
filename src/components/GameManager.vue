@@ -12,6 +12,7 @@
 		<hand v-for="(hand, index) in hands" :key="index"
 		:initCards="hands[index]"
 		:initTrick="trick"
+		:nextTurn="nextTurn"
 		:playTurn="playerTurn == index"
 		:playerIndex="index"></hand>
 	</div>
@@ -42,6 +43,9 @@
 		methods: {
 			updateDeck(updatedDeck){
 				this.cardsDeck = updatedDeck;
+			},
+			nextTurn(){
+				(this.playerTurn >= this.rules.playerNb) ? (this.playerTurn = 0) : (this.playerTurn++);
 			}
 		}
 	}
