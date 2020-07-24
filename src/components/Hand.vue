@@ -29,7 +29,6 @@
 			return{
 
 			}
-			
 		},
 		props: {
 			playerIndex: Number,
