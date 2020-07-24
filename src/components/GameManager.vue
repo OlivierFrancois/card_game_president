@@ -54,7 +54,7 @@
 				this.playerTurn = 0;
 			},
 			nextTurn(){
-				(this.playerTurn >= this.rules.playerNb) ? (this.playerTurn = 0) : (this.playerTurn++);
+				(this.playerTurn >= this.rules.playerNb - 1) ? (this.playerTurn = 0) : (this.playerTurn++);
 			}
 		}
 	}
