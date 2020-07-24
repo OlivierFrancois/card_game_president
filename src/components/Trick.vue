@@ -3,7 +3,7 @@
 			<div class="trick-header">Trick</div>
 			<div class="trick-body">
 				<card
-				v-for="(card, index) in trick"
+				v-for="(card, index) in trickCards"
 				:key="index"
 				:card="card"
 				></card>
@@ -21,7 +21,8 @@
 		},
 		data() {
 			return{
-				trickCards: this.initTrick
+				trickCards: this.initTrick, //Cards in the trick
+				roundCardNb: Number //Number of card player have to play in the round
 			}
 		},
 		props: {

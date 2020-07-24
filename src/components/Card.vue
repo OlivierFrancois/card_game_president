@@ -1,5 +1,5 @@
 <template>
-	<div class="model-card my-1 mx-1">
+	<div class="model-card my-1 mx-1" @click="$emit('getCardByClick')">
 		<p>{{ card.value }} <br> {{ card.family }}</p>
 	</div>
 </template>
@@ -31,5 +31,9 @@
 .model-card p{
 	display: table-cell!important;
 	vertical-align: middle!important;
+}
+
+.model-card:hover{
+	background: #a09f9f;
 }
 </style>

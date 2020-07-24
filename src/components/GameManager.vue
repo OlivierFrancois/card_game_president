@@ -10,7 +10,9 @@
 		<br>
 		
 		<hand v-for="(hand, index) in hands" :key="index"
-		:cards="hands[index]"
+		:initCards="hands[index]"
+		:initTrick="trick"
+		:playTurn="playerTurn == index"
 		:playerIndex="index"></hand>
 	</div>
 </template>
@@ -58,6 +60,7 @@
 		flex-wrap: wrap;
 		background: #333;
 		padding: 1%;
+		justify-content: center;
 	}
 
 	.hand-header, .deck-header, .trick-header{
@@ -68,17 +71,5 @@
 	/* TRICK */
 	.trick-body {
 		min-height: 50px;
-	}
-
-	/* HAND */
-	.hand-body{
-		position: relative;
-	}
-
-	.hand-body button{
-		position: absolute;
-		right: 5%;
-		top: 30%;
-		width: 5%;
 	}
 </style>
