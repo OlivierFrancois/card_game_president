@@ -1,5 +1,5 @@
 <template>
-	<div class="model-card my-1 mx-1" @click="$emit('getCardByClick')">
+	<div class="model-card my-1 mx-1" @click="$emit('get-card-by-click')">
 		<p>{{ card.value }} <br> {{ card.family }}</p>
 	</div>
 </template>

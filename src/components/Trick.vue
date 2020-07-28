@@ -13,11 +13,15 @@
 
 <script>
 	import Card from './Card'
+	import {bus} from '../main'
 
 	export default {
 		name: 'Trick',
 		components: {
 			'card': Card
+		},
+		props: {
+			initTrick: Array
 		},
 		data() {
 			return{
@@ -25,8 +29,13 @@
 				roundCardNb: Number //Number of card player have to play in the round
 			}
 		},
-		props: {
-			initTrick: Array
+		created(){
+			//emited from Hand.vue
+			bus.$on('set-round-rule', (data) => {
+				this.roundCardNb = data;
+				console.log(this.roundCardNb);
+				bus.$emit('get-round-rule', this.roundCardNb);
+			})
 		}
 	}
 </script>
