@@ -16,7 +16,10 @@
 					:card="card"></card>
 				</div>
 				
-				<button class="btn btn-primary" v-if="playTurn" @click="pushToTrick()">Jouer</button>
+				<div class="btnGroup">
+					<button class="btn btn-primary mb-1" v-if="playTurn" @click="pushToTrick()">Jouer</button>
+					<button class="btn btn-danger" v-if="playTurn" @click="passTurn()">Passer</button>
+				</div>
 			</div>
 		</div>
 </template>
@@ -34,6 +37,7 @@
 			return{
 				cards: this.initCards,
 				trick: this.initTrick,
+				playersInRound: this.initPlayersInRound,
 				cardsSelect: [],
 				errorMsg: "",
 				roundRule: 0
@@ -44,7 +48,8 @@
 			playTurn: Boolean,
 			nextTurn: Function,
 			initCards : Array,
-			initTrick : Array
+			initTrick : Array,
+			initPlayersInRound : Array
 		},
 		methods: {
 			addToSelect(card){
@@ -74,7 +79,7 @@
 
 				//If the trick already have cards, the player must play the same number of cards that the first player played
 				if (this.roundRule != 0){
-					console.log(this.roundRule);
+					console.log("roundRule actuel : " + this.roundRule);
 					if (this.cardsSelect.length != this.roundRule){
 						this.errorMsg += "ERREUR : Vous devez respecter le nombre de carte à jouer."
 						return false;
@@ -117,6 +122,21 @@
 					}
 					this.nextTurn(); //And we end the turn
 				}
+			},
+			passTurn(){
+				//First we remove the index of the player from the playerInRound array
+				let index = this.playersInRound.indexOf(this.playerIndex);
+
+				//console.log('Tableau des joueurs dans le round : ', this.playersInRound);
+				//console.log('index récupéré : ', index);
+
+				if (index != -1)
+					this.playersInRound.splice(index, 1);
+				else
+					console.log('ERREUR : le joueur n\'est pas dans le tableau');
+
+				//Then we end turn
+				this.nextTurn();
 			}
 		},
 		created() {
@@ -132,11 +152,15 @@
 		position: relative;
 	}
 
-	.hand-body button{
+	.btnGroup{
 		position: absolute;
 		right: 5%;
 		top: 30%;
 		width: 5%;
+	}
+
+	.btnGroup .btn{
+		width: 100%;
 	}
 
 	.cards-selector{

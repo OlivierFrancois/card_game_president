@@ -16,6 +16,7 @@
 		:initTrick="trick"
 		:nextTurn="nextTurn"
 		:playTurn="playerTurn == index"
+		:initPlayersInRound="playersInRound"
 		:playerIndex="index"></hand>
 	</div>
 </template>
@@ -38,13 +39,19 @@
 				cardsDeck: [],
 				hands: [],
 				trick: [],
-				playerTurn : 0,
-				playerSelection: []
+				playerTurn: 0,
+				playerSelection: [],
+				playersInRound: []
 			}
 		},
 		methods: {
 			updateDeck(updatedDeck){
 				this.cardsDeck = updatedDeck;
+			},
+			resetPlayersInRound(){
+				for (let i = 0; i < this.rules.playerNb; i++) {
+					this.playersInRound.push(i);
+				}
 			},
 			reset(){
 				this.cardsDeck = [];
@@ -52,10 +59,31 @@
 				this.trick = [];
 				this.playerSelection = [];
 				this.playerTurn = 0;
+				this.playersInRound = [];
+
+				this.resetPlayersInRound();
 			},
 			nextTurn(){
-				(this.playerTurn >= this.rules.playerNb - 1) ? (this.playerTurn = 0) : (this.playerTurn++);
+				let playerHasPassed = true; //Used to leave the loop
+				let i = 0; //Used to leave the loop if every players have passed
+
+				//We repeat that until we get a player that has not passed or until we checked every players
+				while ((playerHasPassed) && (i < this.playersInRound.length)) {
+					//First we get the next player
+					(this.playerTurn >= this.rules.playerNb - 1) ? (this.playerTurn = 0) : (this.playerTurn++);
+
+					//Then we check if this player is in the round
+					let j = 0;
+					while ((playerHasPassed) && (j < this.playersInRound.length)) {
+						playerHasPassed = (this.playerTurn != this.playersInRound[j]);
+						j++;
+					}
+					i++;
+				}
 			}
+		},
+		created(){
+			this.resetPlayersInRound();
 		}
 	}
 </script>

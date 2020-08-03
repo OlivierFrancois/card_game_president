@@ -26,15 +26,21 @@
 		data() {
 			return{
 				trickCards: this.initTrick, //Cards in the trick
-				roundCardNb: Number //Number of card player have to play in the round
+				roundRule: Number, //Number of card player have to play in the round
+				playersLeft: Number
 			}
 		},
 		created(){
 			//emited from Hand.vue
 			bus.$on('set-round-rule', (data) => {
-				this.roundCardNb = data;
-				console.log(this.roundCardNb);
-				bus.$emit('get-round-rule', this.roundCardNb);
+				this.roundRule = data;
+				// console.log("data : " + data);
+				// console.log("roundRule editée : " + this.roundRule);
+				bus.$emit('get-round-rule', this.roundRule);
+			})
+
+			bus.$on('decrease-player-left', () => {
+				this.playersLeft--;
 			})
 		}
 	}
