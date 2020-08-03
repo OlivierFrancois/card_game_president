@@ -1,7 +1,7 @@
 <template>
-	<div class="hand">
+	<div class="hand" >
 			<div class="hand-header">Joueur {{ playerIndex + 1 }}</div>
-			<div class="hand-body">
+			<div class="hand-body" :class="{ hasPassed : !playTurn }">
 				<card
 				v-for="(card, index) in cards"
 				:key="index"
@@ -170,5 +170,9 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
+	}
+
+	.hasPassed{
+		background: #292929!important;
 	}
 </style>
