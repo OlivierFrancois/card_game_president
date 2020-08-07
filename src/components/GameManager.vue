@@ -67,7 +67,7 @@
 				this.resetPlayersInRound();
 			},
 			nextTurn(){
-				console.log(this.playersInRound);
+				//console.log(this.playersInRound);
 				//We reset a variable inside every hand through this event
 				bus.$emit("set-x-or-pass", false);
 
@@ -75,7 +75,23 @@
 				if (this.playersInRound.length <= 1){
 					this.nextRound();
 				}
-				else {			
+				else {
+					//If the last 4 cards played have the same value, the round just ends
+					if (this.trick.length >= 4) {
+						let tempLength = this.trick.length;
+						let exitLoop = true;
+						let i = 1;
+						do {
+							exitLoop = this.trick[tempLength - 1].value == this.trick[tempLength - i].value;
+							i++;
+						} while (exitLoop && (i <= 4));
+
+						if (exitLoop) {
+							this.nextRound();
+							return;
+						}
+					}
+
 					let playerHasPassed = true; //Used to leave the loop
 					let i = 0; //Used to leave the loop if every players have passed
 
@@ -95,8 +111,8 @@
 				}
 			},
 			nextRound(){
-				this.playerTurn = this.playersInRound[0]; //Decide which player has to start
 				this.resetPlayersInRound(); //Reset players in round
+				bus.$emit("set-x-or-pass", false);
 				this.trick.splice(0, this.trick.length); //Clear the trick
 				bus.$emit("set-round-rule", 0);
 				console.log('NEXT ROUND');

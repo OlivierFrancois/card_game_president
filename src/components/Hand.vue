@@ -18,7 +18,8 @@
 				
 				<div class="btnGroup">
 					<button class="btn btn-primary mb-1" v-if="playTurn" @click="pushToTrick()">Jouer</button>
-					<button class="btn btn-danger" v-if="playTurn" @click="passTurn()">Passer</button>
+					<button class="btn btn-warning" v-if="playTurn && xOrPass" @click="nextTurn()">Passer</button>
+					<button class="btn btn-danger" v-if="playTurn" @click="passTurn()">Se coucher</button>
 				</div>
 			</div>
 		</div>
@@ -38,9 +39,10 @@
 				cards: this.initCards,
 				trick: this.initTrick,
 				playersInRound: this.initPlayersInRound,
-				cardsSelect: [],
+				cardsSelect: [], //cards player want to send to the trick
 				errorMsg: "",
-				roundRule: 0
+				roundRule: 0, //number of cards player have to play
+				xOrPass: false //To handle the case where the previous 2 cards have the same value
 			}
 		},
 		props: {
@@ -66,6 +68,7 @@
 			validateSelect(){
 				this.errorMsg = ''; //reset the errorMsg
 
+
 				//Player can only play cards with same value
 				for(let i = 0; i < this.cardsSelect.length; i++){
 					let cardValue = this.cardsSelect[i].value;
@@ -79,9 +82,25 @@
 
 				//If the trick already have cards, the player must play the same number of cards that the first player played
 				if (this.roundRule != 0){
-					console.log("roundRule actuel : " + this.roundRule);
+					//console.log("roundRule actuel : " + this.roundRule);
 					if (this.cardsSelect.length != this.roundRule){
 						this.errorMsg += "ERREUR : Vous devez respecter le nombre de carte à jouer."
+						return false;
+					}
+				}
+
+				//If the last 2 cards are the same value, the player has to play those value
+				if (this.xOrPass) {
+					let length = this.trick.length;
+					/*if (this.trick[length - 1].value == this.trick[length - 2].value){
+						if (this.cardsSelect[this.cardsSelect.length - 1].value != this.trick[length - 1].value) {
+							this.errorMsg += "ERREUR : " + this.trick[length - 1].value + " ou passe !";
+							return false;
+						}
+					}*/
+
+					if (this.cardsSelect[this.cardsSelect.length - 1].value != this.trick[length - 1].value) {
+						this.errorMsg += "ERREUR : " + this.trick[length - 1].value + " ou passe !";
 						return false;
 					}
 				}
@@ -115,11 +134,19 @@
 						bus.$emit("set-round-rule", this.cardsSelect.length);
 					}
 
+					//Before we push the cards, we check if the previous played cards are the same. If yes, we reset set-x-or-pass-trick
+					let tempLength = this.trick.length;
+					if ((tempLength >= 2) && (this.trick[tempLength - 1].value == this.trick[tempLength - 2].value)){
+						bus.$emit("set-x-or-pass-trick", false);
+					}
+
+					//Now we push the selected cards into the trick
 					let n = this.cardsSelect.length;
 					for(let i = 0; i < n; i++){
 						let cardToPush = this.cardsSelect.shift();
 						this.trick.push(cardToPush);
 					}
+
 					this.nextTurn(); //And we end the turn
 				}
 			},
@@ -143,24 +170,50 @@
 			bus.$on('get-round-rule', (data) => {
 				this.roundRule = data;
 			})
+		},
+		updated() {
+			bus.$on('set-x-or-pass', (data) => {
+				this.xOrPass = data;
+			})
 		}
 	}
 </script>
 
 <style>
+	.hand{
+		width: 90%;
+		margin: auto;
+		margin-top: 10px;
+	}
+
+	.hand-header{
+		background: #222;
+		color:lightseagreen;
+	}
+
 	.hand-body{
 		position: relative;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		background: #333;
+		padding: 1%;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.btnGroup{
-		position: absolute;
-		right: 5%;
+		position: relative;
 		top: 30%;
-		width: 5%;
+		width: 30%;
+		display: flex;
+		margin-left: 50px;
 	}
 
 	.btnGroup .btn{
-		width: 100%;
+		width: 150px;
+		margin: 5px;
+		height: 40px;
 	}
 
 	.cards-selector{

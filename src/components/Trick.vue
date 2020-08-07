@@ -27,7 +27,9 @@
 			return{
 				trickCards: this.initTrick, //Cards in the trick
 				roundRule: Number, //Number of card player have to play in the round
-				playersLeft: Number
+				playersLeft: Number,
+				xOrPassTrick: false
+				/*skipNextPlayer: Boolean*/
 			}
 		},
 		created(){
@@ -41,6 +43,19 @@
 
 			bus.$on('decrease-player-left', () => {
 				this.playersLeft--;
+			})
+		},
+		updated(){
+			if ((this.roundRule == 1) && (this.trickCards.length >= 2) && (!this.xOrPassTrick)) {
+				let length = this.trickCards.length;
+				if (this.trickCards[length - 1].value == this.trickCards[length - 2].value){
+					this.xOrPassTrick = true;
+					bus.$emit('set-x-or-pass', 'true');
+				}
+			}
+
+			bus.$on('set-x-or-pass-trick', (data) => {
+				this.xOrPassTrick = data;
 			})
 		}
 	}
