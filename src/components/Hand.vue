@@ -1,6 +1,6 @@
 <template>
 	<div class="hand" >
-			<div class="hand-header">Joueur {{ playerIndex + 1 }}</div>
+			<div class="hand-header" @dblclick="sortHand()" >Joueur {{ playerIndex + 1 }}</div>
 			<div class="hand-body" :class="{ hasPassed : !playTurn }">
 				<card
 				v-for="(card, index) in cards"
@@ -54,6 +54,14 @@
 			initPlayersInRound : Array
 		},
 		methods: {
+			sortHand(){
+				this.cards.sort((a, b) => {
+					if ((a.value) > (b.value))
+						return 1;
+					else
+						return -1;
+				})
+			},
 			addToSelect(card){
 				//If it's not the player's turn, we dont do anything
 				if (!this.playTurn)
