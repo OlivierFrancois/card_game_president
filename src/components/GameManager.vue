@@ -42,7 +42,8 @@
 				trick: [],
 				playerTurn: 0,
 				playerSelection: [],
-				playersInRound: []
+				playersInRound: [],
+				lastPlayer: -1
 			}
 		},
 		methods: {
@@ -66,13 +67,13 @@
 
 				this.resetPlayersInRound();
 			},
-			nextTurn(){
-				//console.log(this.playersInRound);
+			nextTurn(hasPassed, hasPlayed){
+				console.log(this.playersInRound);
 				//We reset a variable inside every hand through this event
 				bus.$emit("set-x-or-pass", false);
 
 				//If there is only 1 player left in the round, he wins the round and we start the next one
-				if (this.playersInRound.length <= 1){
+				if ((this.playersInRound.length <= 1)){
 					this.nextRound();
 				}
 				else {
@@ -91,23 +92,23 @@
 							return;
 						}
 					}
-
-					let playerHasPassed = true; //Used to leave the loop
-					let i = 0; //Used to leave the loop if every players have passed
-
-					//We repeat that until we get a player that has not passed or until we checked every players
-					while ((playerHasPassed) && (i < this.playersInRound.length)) {
-						//First we get the next player
-						(this.playerTurn >= this.rules.playerNb - 1) ? (this.playerTurn = 0) : (this.playerTurn++);
-
-						//Then we check if this player is in the round
-						let j = 0;
-						while ((playerHasPassed) && (j < this.playersInRound.length)) {
-							playerHasPassed = (this.playerTurn != this.playersInRound[j]);
-							j++;
-						}
-						i++;
+					
+					if (hasPlayed) {
+						this.lastPlayer = this.playerTurn;
 					}
+					
+					let index = this.playersInRound.indexOf(this.playerTurn);
+					((index + 1) >= this.playersInRound.length) ? (this.playerTurn = this.playersInRound[0]) : (this.playerTurn = this.playersInRound[index + 1]);
+					
+					if (hasPassed) {		
+						if (index != -1)
+							this.playersInRound.splice(index, 1);
+						else
+							console.log("ERREUR : Le joueur que vous souhaitez retirer n'est déjà plus dans le tableau");
+					}
+
+					if (this.playerTurn == this.lastPlayer)
+						this.nextRound();
 				}
 			},
 			nextRound(){

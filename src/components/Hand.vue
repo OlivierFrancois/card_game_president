@@ -18,8 +18,8 @@
 				
 				<div class="btnGroup">
 					<button class="btn btn-primary mb-1" v-if="playTurn" @click="pushToTrick()">Jouer</button>
-					<button class="btn btn-warning" v-if="playTurn && xOrPass" @click="nextTurn()">Passer</button>
-					<button class="btn btn-danger" v-if="playTurn" @click="passTurn()">Se coucher</button>
+					<button class="btn btn-warning" v-if="playTurn && xOrPass" @click="nextTurn(false, false)">Passer</button>
+					<button class="btn btn-danger" v-if="playTurn && (trick.length != 0)" @click="nextTurn(true, false)">Se coucher</button>
 				</div>
 			</div>
 		</div>
@@ -100,13 +100,6 @@
 				//If the last 2 cards are the same value, the player has to play those value
 				if (this.xOrPass) {
 					let length = this.trick.length;
-					/*if (this.trick[length - 1].value == this.trick[length - 2].value){
-						if (this.cardsSelect[this.cardsSelect.length - 1].value != this.trick[length - 1].value) {
-							this.errorMsg += "ERREUR : " + this.trick[length - 1].value + " ou passe !";
-							return false;
-						}
-					}*/
-
 					if (this.cardsSelect[this.cardsSelect.length - 1].value != this.trick[length - 1].value) {
 						this.errorMsg += "ERREUR : " + this.trick[length - 1].value + " ou passe !";
 						return false;
@@ -155,23 +148,8 @@
 						this.trick.push(cardToPush);
 					}
 
-					this.nextTurn(); //And we end the turn
+					this.nextTurn(false, true); //And we end the turn
 				}
-			},
-			passTurn(){
-				//First we remove the index of the player from the playerInRound array
-				let index = this.playersInRound.indexOf(this.playerIndex);
-
-				//console.log('Tableau des joueurs dans le round : ', this.playersInRound);
-				//console.log('index récupéré : ', index);
-
-				if (index != -1)
-					this.playersInRound.splice(index, 1);
-				else
-					console.log('ERREUR : le joueur n\'est pas dans le tableau');
-
-				//Then we end turn
-				this.nextTurn();
 			}
 		},
 		created() {
