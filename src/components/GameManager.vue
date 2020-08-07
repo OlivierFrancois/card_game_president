@@ -67,7 +67,11 @@
 				this.resetPlayersInRound();
 			},
 			nextTurn(){
-				//If there is online 1 player left in the round, he wins the round and we start the next one
+				console.log(this.playersInRound);
+				//We reset a variable inside every hand through this event
+				bus.$emit("set-x-or-pass", false);
+
+				//If there is only 1 player left in the round, he wins the round and we start the next one
 				if (this.playersInRound.length <= 1){
 					this.nextRound();
 				}
@@ -110,13 +114,13 @@
 </script>
 
 <style>
-	.deck, .hand, .trick{
+	.deck, .trick{
 		width: 90%;
 		margin: auto;
 		margin-top: 10px;
 	}
 	
-	.deck-body, .hand-body, .trick-body{
+	.deck-body, .trick-body{
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -125,7 +129,7 @@
 		justify-content: center;
 	}
 
-	.hand-header, .deck-header, .trick-header{
+	.deck-header, .trick-header{
 		background: #222;
 		color:lightseagreen;
 	}
