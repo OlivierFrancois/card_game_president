@@ -42,18 +42,36 @@
 				this.cardsDeck = []; //reset the deck
 				let tempFamily = '';
 				for (let i = 0; i < 4; i++){
+					let newCard = {
+						family: String,
+						value: Number,
+						img: String
+					};
+					
+					let familyLetter = "";
+
 					switch (i){
-						case 0 : tempFamily = "coeur"; break;
-						case 1 : tempFamily = "pique"; break;
-						case 2 : tempFamily = "trèfle"; break;
-						case 3 : tempFamily = "carreau"; break;
+						case 0 : tempFamily = "coeur"; familyLetter = "H"; break;
+						case 1 : tempFamily = "pique"; familyLetter = "S";break;
+						case 2 : tempFamily = "trèfle"; familyLetter = "C";break;
+						case 3 : tempFamily = "carreau"; familyLetter = "D";break;
 					}
+
+					newCard.family = tempFamily;
+					
 					for (let cardValue = 1; cardValue <= 13; cardValue++){
-						this.cardsDeck.push({value: cardValue, family: tempFamily});
+						let tempCard = {};
+						let tempAdress = "";
+
+						tempAdress = cardValue + familyLetter + ".png";
+
+						newCard.img = tempAdress;
+						newCard.value = cardValue;
+
+						Object.assign(tempCard, newCard);
+						this.cardsDeck.push(tempCard);
 					}
 				}
-
-				//this.$emit('updateDeck', this.cardsDeck)
 			},
 			shuffleDeck(){
 				let tempArr = this.cardsDeck.slice(); //clone the deck
