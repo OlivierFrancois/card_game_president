@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="section-gamemanager">
 		<deck
 		:initRules="rules"
 		:initCardsDeck="cardsDeck"
@@ -11,13 +11,15 @@
 
 		<br>
 		
-		<hand v-for="(hand, index) in hands" :key="index"
-		:initCards="hands[index]"
-		:initTrick="trick"
-		:nextTurn="nextTurn"
-		:playTurn="playerTurn == index"
-		:initPlayersInRound="playersInRound"
-		:playerIndex="index"></hand>
+		<div class="hands">
+			<hand v-for="(hand, index) in hands" :key="index"
+			:initCards="hands[index]"
+			:initTrick="trick"
+			:nextTurn="nextTurn"
+			:playTurn="playerTurn == index"
+			:initPlayersInRound="playersInRound"
+			:playerIndex="index"></hand>
+		</div>
 	</div>
 </template>
 
@@ -154,5 +156,11 @@
 	/* TRICK */
 	.trick-body {
 		min-height: 50px;
+	}
+
+	.hands{
+		position: relative;
+		width: 100%;
+		height: 300px;
 	}
 </style>

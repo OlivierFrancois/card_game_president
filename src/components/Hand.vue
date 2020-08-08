@@ -1,5 +1,5 @@
 <template>
-	<div class="hand" >
+	<div class="hand" :class="{ invisiblehand: !playTurn }">
 			<div class="hand-header" @dblclick="sortHand()" >Joueur {{ playerIndex + 1 }}</div>
 			<div class="hand-body" :class="{ hasPassed : !playTurn }">
 				<card
@@ -168,8 +168,10 @@
 <style>
 	.hand{
 		width: 90%;
-		margin: auto;
-		margin-top: 10px;
+		transition: all 1s ease-in-out;
+		position: absolute;
+		top: 0;
+		margin: 10px 5% 0 5%;
 	}
 
 	.hand-header{
@@ -213,5 +215,10 @@
 
 	.hasPassed{
 		background: #292929!important;
+	}
+
+	.invisiblehand{
+		opacity: 0;
+		top: 1000px;
 	}
 </style>

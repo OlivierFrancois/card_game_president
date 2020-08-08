@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="section-deck">
 		<button class="btn btn-primary mr-3 my-1" v-on:click="generateDeck()">Générer un deck</button>
 		<button class="btn btn-primary mr-3 my-1" v-on:click="shuffleDeck()">Mélanger le deck</button>
 		<button class="btn btn-primary mr-3 my-1 " v-on:click="distrib()">Distribuer</button>
