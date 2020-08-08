@@ -1,6 +1,7 @@
 <template>
 	<div class="hand" :class="{ invisiblehand: !playTurn }">
 			<div class="hand-header" @dblclick="sortHand()" >Joueur {{ playerIndex + 1 }}</div>
+			
 			<div class="hand-body" :class="{ hasPassed : !playTurn }">
 				<card
 				v-for="(card, index) in cards"
@@ -16,11 +17,12 @@
 					:card="card"></card>
 				</div>
 				
-				<div class="btnGroup">
-					<button class="btn btn-primary mb-1" v-if="playTurn" @click="pushToTrick()">Jouer</button>
-					<button class="btn btn-warning" v-if="playTurn && xOrPass" @click="nextTurn(false, false)">Passer</button>
-					<button class="btn btn-danger" v-if="playTurn && (trick.length != 0)" @click="nextTurn(true, false)">Se coucher</button>
-				</div>
+			</div>
+
+			<div class="btnGroup">
+				<button class="btn btn-primary" v-if="playTurn" @click="pushToTrick()">Jouer</button>
+				<button class="btn btn-warning" v-if="playTurn && xOrPass" @click="nextTurn(false, false)">Passer</button>
+				<button class="btn btn-danger" v-if="playTurn && (trick.length != 0)" @click="nextTurn(true, false)">Se coucher</button>
 			</div>
 		</div>
 </template>
@@ -177,6 +179,7 @@
 	.hand-header{
 		background: #222;
 		color:lightseagreen;
+		font-size: 1.5em;
 	}
 
 	.hand-body{
@@ -184,23 +187,22 @@
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
-		background: #333;
+		background: #3f3f3f;
 		padding: 1%;
 		justify-content: center;
 		align-items: center;
 	}
 
 	.btnGroup{
-		position: relative;
-		top: 30%;
-		width: 30%;
+		background: #333;
 		display: flex;
-		margin-left: 50px;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.btnGroup .btn{
-		width: 150px;
-		margin: 5px;
+		width: 250px;
+		margin: 5px 10px 5px 10px;
 		height: 40px;
 	}
 

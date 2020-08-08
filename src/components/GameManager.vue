@@ -151,6 +151,7 @@
 	.deck-header, .trick-header{
 		background: #222;
 		color:lightseagreen;
+		font-size: 1.5em;
 	}
 	
 	/* TRICK */
